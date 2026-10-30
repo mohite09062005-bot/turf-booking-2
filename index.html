@@ -1,0 +1,1454 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurfBook | Book Your Game</title>
+
+<style>
+:root {
+    --green: #087f5b;
+    --green-dark: #056044;
+    --blue: #1769e0;
+    --dark: #14251e;
+    --muted: #718078;
+    --light: #f4f8f5;
+    --white: #fff;
+    --border: #e4ebe6;
+    --shadow: 0 12px 35px rgba(15, 50, 32, .08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Inter, Arial, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+header {
+    background: rgba(255,255,255,.97);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: -.8px;
+}
+
+.logo span {
+    color: var(--dark);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+nav button {
+    border: 0;
+    background: transparent;
+    color: #43534a;
+    padding: 9px 13px;
+    border-radius: 9px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+nav button:hover {
+    background: #eaf5ee;
+    color: var(--green);
+}
+
+.welcome {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1180px;
+    margin: 35px auto 60px;
+    min-height: 65vh;
+}
+
+.hero {
+    min-height: 390px;
+    border-radius: 24px;
+    padding: 65px 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: white;
+    background:
+        linear-gradient(90deg, rgba(3,35,23,.93), rgba(3,35,23,.35)),
+        url("https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=85");
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--shadow);
+}
+
+.hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.3);
+    padding: 7px 14px;
+    border-radius: 30px;
+    margin-bottom: 18px;
+    font-size: 13px;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.12;
+    max-width: 650px;
+    margin-bottom: 17px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 550px;
+    color: #e2eee7;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 19px;
+    background: var(--green);
+    color: white;
+    font-weight: 700;
+    transition: .2s;
+    text-decoration: none;
+    margin: 3px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    background: var(--green-dark);
+}
+
+.btn-blue { background: var(--blue); }
+.btn-blue:hover { background: #1055b7; }
+.btn-danger { background: #dc3545; }
+.btn-danger:hover { background: #b42332; }
+.btn-secondary { background: #65736b; }
+.btn-white { background: white; color: var(--green); }
+.btn-white:hover { background: #eaf5ee; }
+.btn-small { padding: 8px 12px; font-size: 13px; }
+
+.section {
+    margin-top: 55px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+.section-heading h2 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.stat {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 25px;
+    color: var(--green);
+}
+
+.stat span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,.035);
+    transition: .25s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.turf-image {
+    height: 185px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    color: white;
+    background: linear-gradient(135deg, #087f5b, #1769e0);
+    position: relative;
+}
+
+.turf-image.image-1 {
+    background: linear-gradient(135deg, #087f5b, #0e9b70);
+}
+
+.turf-image.image-2 {
+    background: linear-gradient(135deg, #174c9a, #1769e0);
+}
+
+.turf-image.image-3 {
+    background: linear-gradient(135deg, #7345a5, #1769e0);
+}
+
+.turf-content {
+    padding: 21px;
+}
+
+.turf-content h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.turf-content p {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.price {
+    font-size: 23px;
+    font-weight: 900;
+    color: var(--green);
+    margin: 14px 0;
+}
+
+.price small {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.form-box {
+    background: white;
+    max-width: 520px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.form-box h2 {
+    text-align: center;
+    color: var(--green);
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d6e0d9;
+    border-radius: 9px;
+    outline: none;
+    background: #fbfdfb;
+}
+
+.form-group input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(8,127,91,.1);
+}
+
+.form-box .btn {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.info, .notice {
+    background: #edf7f0;
+    padding: 17px;
+    border-radius: 11px;
+    margin-bottom: 20px;
+    border: 1px solid #dcefe2;
+}
+
+.info p {
+    margin: 6px 0;
+}
+
+.search-box {
+    max-width: 500px;
+    margin: 0 auto 25px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 17px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    background: white;
+}
+
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.slot {
+    background: white;
+    border: 2px solid #dbe7de;
+    padding: 17px 8px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.slot:hover {
+    border-color: var(--green);
+}
+
+.slot input {
+    accent-color: var(--green);
+    margin-right: 5px;
+}
+
+.slot:has(input:checked) {
+    background: #e7f6ec;
+    border-color: var(--green);
+}
+
+.slot.booked {
+    background: #f0f0f0;
+    color: #999;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+
+.slot small {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.booking-list {
+    display: grid;
+    gap: 17px;
+}
+
+.booking {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 23px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.03);
+}
+
+.booking h3 {
+    color: var(--green);
+    margin-bottom: 12px;
+}
+
+.booking p {
+    margin: 5px 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #e5f7eb;
+    color: #087f5b;
+}
+
+.status.cancelled {
+    background: #ffe7e7;
+    color: #c62828;
+}
+
+.confirmation {
+    background: white;
+    max-width: 650px;
+    margin: 30px auto;
+    text-align: center;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.success-icon {
+    font-size: 65px;
+}
+
+.confirmation h1 {
+    color: var(--green);
+    margin: 10px 0 20px;
+}
+
+.booking-id {
+    background: #eaf4ed;
+    border: 1px dashed var(--green);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 18px 0;
+    font-weight: bold;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.admin-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.admin-card .icon {
+    font-size: 40px;
+}
+
+.admin-card h2 {
+    color: var(--green);
+    font-size: 30px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: white;
+    padding: 15px;
+    border-radius: 13px;
+    box-shadow: var(--shadow);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #e3e9e5;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #eaf5ee;
+    color: var(--green-dark);
+}
+
+.empty {
+    text-align: center;
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    color: var(--muted);
+}
+
+footer {
+    background: #10251b;
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+    line-height: 1.9;
+    margin-top: 55px;
+}
+
+footer strong {
+    color: #67d6a0;
+}
+
+@media(max-width: 850px) {
+    .grid, .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .slot-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    header {
+        justify-content: center;
+    }
+}
+
+@media(max-width: 560px) {
+    .container {
+        width: 94%;
+        margin-top: 20px;
+    }
+
+    .grid, .admin-grid, .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 45px 23px;
+        min-height: 350px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    nav button {
+        padding: 7px 9px;
+        font-size: 13px;
+    }
+
+    .form-box {
+        padding: 22px;
+    }
+
+    .slot-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">⚽ Turf<span>Book</span></div>
+    <nav id="nav"></nav>
+</header>
+
+<main class="container" id="app"></main>
+
+<footer>
+    <h3>⚽ TurfBook</h3>
+    <p>Book your game. Play your game. Enjoy your game.</p>
+    <p>© 2026 TurfBook | Online Turf Booking System</p>
+</footer>
+
+<script>
+// ===================================
+// TURF DATA
+// ===================================
+
+const TURFS = {
+    1: {
+        name: "Green Arena Turf",
+        location: "Kolhapur",
+        sport: "Football",
+        capacity: 10,
+        price: 800,
+        icon: "⚽"
+    },
+    2: {
+        name: "Champions Turf",
+        location: "Kolhapur",
+        sport: "Football",
+        capacity: 12,
+        price: 1000,
+        icon: "🏆"
+    },
+    3: {
+        name: "Football Zone",
+        location: "Kolhapur",
+        sport: "Football",
+        capacity: 10,
+        price: 700,
+        icon: "🥅"
+    }
+};
+
+const SLOTS = [
+    "09:00 AM - 10:00 AM",
+    "10:00 AM - 11:00 AM",
+    "11:00 AM - 12:00 PM",
+    "12:00 PM - 01:00 PM",
+    "04:00 PM - 05:00 PM",
+    "05:00 PM - 06:00 PM",
+    "06:00 PM - 07:00 PM",
+    "07:00 PM - 08:00 PM",
+    "08:00 PM - 09:00 PM"
+];
+
+// ===================================
+// STORAGE
+// ===================================
+
+let currentUser = null;
+let isAdmin = false;
+let cachedBookings = [];
+let cachedUsers = [];
+
+async function api(url, options = {}) {
+    const response = await fetch(url, {
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`);
+    return data;
+}
+
+function showError(error) {
+    alert(error.message || "Something went wrong. Please try again.");
+}
+
+let selectedTurf = 1;
+let selectedDate = "";
+let selectedSlot = "";
+let searchText = "";
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function today() {
+    const date = new Date();
+    return new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+    ).toISOString().slice(0, 10);
+}
+
+function validDate(value) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+        value >= today();
+}
+
+function formatDate(value) {
+    if (!value) return "";
+    return new Date(value + "T00:00:00").toLocaleDateString(
+        "en-IN",
+        { day: "2-digit", month: "short", year: "numeric" }
+    );
+}
+
+// ===================================
+// NAVIGATION
+// ===================================
+
+function go(page) {
+    location.hash = page;
+}
+
+function getPage() {
+    return location.hash.replace("#", "") || "home";
+}
+
+function updateNav() {
+    let html = `
+        <button onclick="go('home')">Home</button>
+        <button onclick="go('turfs')">Explore Turfs</button>
+    `;
+
+    if (currentUser) {
+        html += `
+            <button onclick="go('my-bookings')">My Bookings</button>
+            <span class="welcome">Hi, ${escapeHTML(currentUser.name)}</span>
+            <button onclick="logout()">Logout</button>
+        `;
+    } else {
+        html += `
+            <button onclick="go('login')">Login</button>
+            <button onclick="go('register')">Register</button>
+        `;
+    }
+
+    if (isAdmin) {
+        html += `
+            <button onclick="go('admin')">Dashboard</button>
+            <button onclick="adminLogout()">Admin Logout</button>
+        `;
+    } else {
+        html += `<button onclick="go('admin-login')">Admin</button>`;
+    }
+
+    document.getElementById("nav").innerHTML = html;
+}
+
+// ===================================
+// HOME PAGE
+// ===================================
+
+function homePage() {
+    return `
+        <section class="hero">
+            <span class="hero-tag">⚽ YOUR GAME STARTS HERE</span>
+            <h1>Find Your Turf.<br>Book Your Game.</h1>
+            <p>
+                Discover the best football turfs in your area.
+                Choose your time and book your next match easily.
+            </p>
+            <button class="btn btn-white" onclick="go('turfs')">
+                Explore Turfs →
+            </button>
+        </section>
+
+        <div class="stats">
+            <div class="stat">
+                <strong>03+</strong>
+                <span>Available Turfs</span>
+            </div>
+            <div class="stat">
+                <strong>Easy</strong>
+                <span>Online Booking</span>
+            </div>
+            <div class="stat">
+                <strong>24/7</strong>
+                <span>Booking Access</span>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="section-heading">
+                <h2>Why Choose TurfBook?</h2>
+                <p>Everything you need to organize your next game.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="turf-content">
+                        <h3>🏟️ Quality Turfs</h3>
+                        <p>Explore available football turfs and compare prices.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="turf-content">
+                        <h3>📅 Simple Booking</h3>
+                        <p>Select a date and available time slot in a few steps.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="turf-content">
+                        <h3>✅ Instant Confirmation</h3>
+                        <p>Get a unique booking ID after confirming your booking.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <h2>Popular Turfs</h2>
+                <p>Choose your favourite place to play.</p>
+            </div>
+            ${turfCards()}
+            <div style="text-align:center;margin-top:25px">
+                <button class="btn" onclick="go('turfs')">
+                    View All Turfs →
+                </button>
+            </div>
+        </section>
+    `;
+}
+
+// ===================================
+// TURF CARDS AND SEARCH
+// ===================================
+
+function turfCards() {
+    let html = "";
+
+    Object.keys(TURFS).forEach(id => {
+        const turf = TURFS[id];
+
+        if (
+            !turf.name.toLowerCase().includes(searchText.toLowerCase()) &&
+            !turf.location.toLowerCase().includes(searchText.toLowerCase())
+        ) return;
+
+        html += `
+            <div class="card">
+                <div class="turf-image image-${id}">
+                    ${turf.icon}
+                </div>
+
+                <div class="turf-content">
+                    <h3>${escapeHTML(turf.name)}</h3>
+                    <p>📍 ${escapeHTML(turf.location)}</p>
+                    <p>⚽ ${escapeHTML(turf.sport)}</p>
+                    <p>👥 ${turf.capacity} players</p>
+
+                    <div class="price">
+                        ₹${turf.price}
+                        <small>/ hour</small>
+                    </div>
+
+                    <button class="btn" onclick="chooseTurf(${id})">
+                        View Details →
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    return html || `<div class="empty">No turfs found. Try another search.</div>`;
+}
+
+function turfPage() {
+    return `
+        <div class="section-heading">
+            <h2>🏟️ Explore Available Turfs</h2>
+            <p>Find the perfect place for your next match.</p>
+        </div>
+
+        <div class="search-box">
+            <input
+                id="turfSearch"
+                placeholder="🔍 Search by turf name or location..."
+                value="${escapeHTML(searchText)}"
+                oninput="searchTurfs(this.value)"
+            >
+        </div>
+
+        <div class="grid" id="turfCards">
+            ${turfCards()}
+        </div>
+    `;
+}
+
+function searchTurfs(value) {
+    searchText = value;
+    document.getElementById("turfCards").innerHTML = turfCards();
+}
+
+function chooseTurf(id) {
+    selectedTurf = Number(id);
+    selectedDate = "";
+    selectedSlot = "";
+    go("details");
+}
+
+// ===================================
+// TURF DETAILS
+// ===================================
+
+function detailsPage() {
+    const turf = TURFS[selectedTurf];
+
+    if (!turf) {
+        return `<div class="empty">Turf not found.</div>`;
+    }
+
+    return `
+        <div class="form-box">
+            <h2>${turf.icon} ${escapeHTML(turf.name)}</h2>
+
+            <div class="info">
+                <p><b>📍 Location:</b> ${escapeHTML(turf.location)}</p>
+                <p><b>⚽ Sport:</b> ${escapeHTML(turf.sport)}</p>
+                <p><b>👥 Capacity:</b> ${turf.capacity} players</p>
+                <p><b>💰 Price:</b> ₹${turf.price} / hour</p>
+            </div>
+
+            <div class="form-group">
+                <label>Select Booking Date</label>
+                <input type="date" id="date" min="${today()}">
+            </div>
+
+            <button class="btn" onclick="checkSlots()">
+                Check Available Slots →
+            </button>
+
+            <button class="btn btn-secondary" onclick="go('turfs')">
+                Back to Turfs
+            </button>
+        </div>
+    `;
+}
+
+function checkSlots() {
+    const date = document.getElementById("date").value;
+
+    if (!validDate(date)) {
+        alert("Please select today or a future date.");
+        return;
+    }
+
+    selectedDate = date;
+    selectedSlot = "";
+    go("slots");
+}
+
+// ===================================
+// TIME SLOTS
+// ===================================
+
+async function slotsPage() {
+    const turf = TURFS[selectedTurf];
+    if (!turf || !validDate(selectedDate)) {
+        return `<div class="empty">Please select a turf and valid date first.<br>
+            <button class="btn" onclick="go('turfs')">Explore Turfs</button></div>`;
+    }
+
+    let booked = [];
+    try {
+        const result = await api(`/api/availability?turfId=${encodeURIComponent(selectedTurf)}&date=${encodeURIComponent(selectedDate)}`);
+        booked = result.bookedSlots || [];
+    } catch (error) {
+        return `<div class="empty">Could not load available slots: ${escapeHTML(error.message)}
+            <br><button class="btn" onclick="go('details')">Try Again</button></div>`;
+    }
+
+    let html = "";
+    SLOTS.forEach((slot, index) => {
+        if (booked.includes(slot)) {
+            html += `<div class="slot booked"><b>${escapeHTML(slot)}</b><small>❌ Already booked</small></div>`;
+        } else {
+            html += `<label class="slot"><input type="radio" name="slot" value="${index}"
+                ${selectedSlot === slot ? "checked" : ""}
+                onchange="selectSlot(${index})"><b>${escapeHTML(slot)}</b><small>✅ Available</small></label>`;
+        }
+    });
+
+    return `<div class="section-heading"><h2>🕐 Select Your Time Slot</h2>
+        <p>${escapeHTML(turf.name)} | ${formatDate(selectedDate)}</p></div>
+        <div class="slot-grid">${html}</div>
+        <div style="text-align:center;margin-top:25px">
+            <button class="btn" onclick="continueBooking()">Continue to Booking →</button>
+            <button class="btn btn-secondary" onclick="go('details')">Back</button>
+        </div>`;
+}
+
+function selectSlot(index) {
+    selectedSlot = SLOTS[index];
+}
+
+function continueBooking() {
+    if (!selectedSlot) {
+        alert("Please select a time slot.");
+        return;
+    }
+
+    if (!currentUser) {
+        alert("Please login before booking.");
+        go("login");
+        return;
+    }
+
+    go("booking");
+}
+
+// ===================================
+// REGISTER
+// ===================================
+
+function registerPage() {
+    return `
+        <div class="form-box">
+            <h2>📝 Create Your Account</h2>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input id="name" maxlength="100" placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input id="mobile" maxlength="10" inputmode="numeric"
+                    placeholder="Enter 10-digit mobile number">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password"
+                    placeholder="Minimum 6 characters">
+            </div>
+
+            <button class="btn" onclick="registerUser()">Create Account</button>
+
+            <p style="text-align:center;margin-top:15px">
+                Already registered? <a href="#login">Login here</a>
+            </p>
+        </div>
+    `;
+}
+
+async function registerUser() {
+    const name = document.getElementById("name").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = document.getElementById("password").value;
+    if (!name || !/^\d{10}$/.test(mobile) || password.length < 6) {
+        alert("Enter a valid name, 10-digit mobile number and password of at least 6 characters.");
+        return;
+    }
+    try {
+        currentUser = await api("/api/register", {
+            method: "POST", body: JSON.stringify({ name, mobile, password })
+        });
+        updateNav();
+        alert("Registration successful!");
+        go("home");
+    } catch (error) { showError(error); }
+}
+
+function loginPage() {
+    return `
+        <div class="form-box">
+            <h2>🔐 Customer Login</h2>
+
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input id="mobile" maxlength="10" inputmode="numeric"
+                    placeholder="Enter mobile number">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password"
+                    placeholder="Enter password">
+            </div>
+
+            <button class="btn" onclick="loginUser()">Login</button>
+
+            <p style="text-align:center;margin-top:15px">
+                New customer? <a href="#register">Create an account</a>
+            </p>
+        </div>
+    `;
+}
+
+async function loginUser() {
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = document.getElementById("password").value;
+    try {
+        currentUser = await api("/api/login", {
+            method: "POST", body: JSON.stringify({ mobile, password })
+        });
+        updateNav();
+        alert("Login successful!");
+        go("home");
+    } catch (error) { showError(error); }
+}
+
+async function logout() {
+    try { await api("/api/logout", { method: "POST", body: "{}" }); }
+    catch (error) { console.error(error); }
+    currentUser = null;
+    updateNav();
+    go("home");
+}
+
+function bookingPage() {
+    if (!currentUser || !TURFS[selectedTurf] ||
+        !validDate(selectedDate) || !SLOTS.includes(selectedSlot)) {
+        return `<div class="empty">Invalid booking details.
+            <button class="btn" onclick="go('turfs')">Explore Turfs</button>
+        </div>`;
+    }
+
+    const turf = TURFS[selectedTurf];
+
+    return `
+        <div class="form-box">
+            <h2>📅 Confirm Your Booking</h2>
+
+            <div class="info">
+                <p><b>Turf:</b> ${escapeHTML(turf.name)}</p>
+                <p><b>Location:</b> ${escapeHTML(turf.location)}</p>
+                <p><b>Date:</b> ${formatDate(selectedDate)}</p>
+                <p><b>Time:</b> ${selectedSlot}</p>
+                <p><b>Amount:</b> ₹${turf.price}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Customer Name</label>
+                <input id="bookName" maxlength="100"
+                    value="${escapeHTML(currentUser.name)}">
+            </div>
+
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input id="bookMobile" maxlength="10"
+                    value="${escapeHTML(currentUser.mobile)}">
+            </div>
+
+            <button class="btn" onclick="confirmBooking()">
+                Confirm Booking →
+            </button>
+
+            <button class="btn btn-secondary" onclick="go('slots')">
+                Back to Slots
+            </button>
+        </div>
+    `;
+}
+
+// ===================================
+// CONFIRM BOOKING
+// ===================================
+
+async function confirmBooking() {
+    if (!currentUser) { alert("Please login first."); go("login"); return; }
+    const name = document.getElementById("bookName").value.trim();
+    const mobile = document.getElementById("bookMobile").value.trim();
+    if (!name || !/^\d{10}$/.test(mobile) || mobile !== currentUser.mobile) {
+        alert("Enter a valid name and the mobile number linked to your account.");
+        return;
+    }
+    if (!validDate(selectedDate) || !SLOTS.includes(selectedSlot) || !TURFS[selectedTurf]) {
+        alert("Invalid booking details. Please start again."); go("turfs"); return;
+    }
+    const booking = {
+        bookingId: "TB" + Date.now().toString(36).toUpperCase(),
+        name, mobile, turfId: selectedTurf, date: selectedDate,
+        slot: selectedSlot, amount: TURFS[selectedTurf].price
+    };
+    try {
+        const result = await api("/api/bookings", {
+            method: "POST", body: JSON.stringify(booking)
+        });
+        localStorage.setItem("lastBooking", JSON.stringify(result.booking));
+        go("confirmation");
+    } catch (error) {
+        if (error.message.toLowerCase().includes("already booked")) {
+            selectedSlot = "";
+            alert("Sorry! This slot has just been booked. Please select another slot.");
+            go("slots");
+        } else showError(error);
+    }
+}
+
+function confirmationPage() {
+    const booking = JSON.parse(
+        localStorage.getItem("lastBooking") || "null"
+    );
+
+    if (!booking) {
+        return `<div class="empty">No recent booking found.</div>`;
+    }
+
+    const turf = TURFS[booking.turfId];
+
+    if (!turf) {
+        return `<div class="empty">Turf information not found.</div>`;
+    }
+
+    return `
+        <div class="confirmation">
+            <div class="success-icon">✅</div>
+            <h1>Booking Confirmed!</h1>
+            <p>Your turf booking has been saved successfully.</p>
+
+            <div class="booking-id">
+                Booking ID: ${escapeHTML(booking.bookingId)}
+            </div>
+
+            <div class="info" style="text-align:left">
+                <p><b>Name:</b> ${escapeHTML(booking.name)}</p>
+                <p><b>Mobile:</b> ${escapeHTML(booking.mobile)}</p>
+                <p><b>Turf:</b> ${escapeHTML(turf.name)}</p>
+                <p><b>Location:</b> ${escapeHTML(turf.location)}</p>
+                <p><b>Date:</b> ${formatDate(booking.date)}</p>
+                <p><b>Time:</b> ${escapeHTML(booking.slot)}</p>
+                <p><b>Amount:</b> ₹${booking.amount}</p>
+            </div>
+
+            <button class="btn" onclick="go('my-bookings')">
+                View My Bookings
+            </button>
+
+            <button class="btn btn-secondary" onclick="go('home')">
+                Back to Home
+            </button>
+        </div>
+    `;
+}
+
+// ===================================
+// MY BOOKINGS
+// ===================================
+
+async function myBookingsPage() {
+    if (!currentUser) return `<div class="empty">Please login to view your bookings.<br>
+        <button class="btn" onclick="go('login')">Login</button></div>`;
+    let list = [];
+    try { list = await api("/api/my-bookings"); }
+    catch (error) { return `<div class="empty">${escapeHTML(error.message)}</div>`; }
+    if (!list.length) return `<div class="empty"><h2>No Bookings Yet 📅</h2>
+        <p>Book your favourite turf and enjoy your game!</p>
+        <button class="btn" onclick="go('turfs')">Book a Turf</button></div>`;
+    let html = "";
+    list.forEach(b => {
+        const turf = TURFS[b.turfId];
+        if (!turf) return;
+        html += `<div class="booking"><h3>🎫 ${escapeHTML(b.bookingId)}</h3>
+            <p><b>Turf:</b> ${escapeHTML(turf.name)}</p>
+            <p><b>Name:</b> ${escapeHTML(b.name)}</p>
+            <p><b>Mobile:</b> ${escapeHTML(b.mobile)}</p>
+            <p><b>Date:</b> ${formatDate(b.date)}</p>
+            <p><b>Time:</b> ${escapeHTML(b.slot)}</p>
+            <p><b>Amount:</b> ₹${Number(b.amount)}</p>
+            <p><b>Status:</b> <span class="status ${b.status === "Cancelled" ? "cancelled" : ""}">${escapeHTML(b.status)}</span></p>
+            ${b.status === "Confirmed" ? `<button class="btn btn-danger btn-small" onclick="cancelBooking('${escapeHTML(b.bookingId)}')">Cancel Booking</button>` : ""}
+        </div>`;
+    });
+    return `<div class="section-heading"><h2>📋 My Bookings</h2>
+        <p>View and manage your turf reservations.</p></div><div class="booking-list">${html}</div>`;
+}
+
+async function cancelBooking(id) {
+    if (!currentUser || !confirm("Are you sure you want to cancel this booking?")) return;
+    try {
+        await api(`/api/my-bookings/${encodeURIComponent(id)}/cancel`, { method: "PATCH", body: "{}" });
+        alert("Booking cancelled successfully.");
+        await render();
+    } catch (error) { showError(error); }
+}
+
+function adminLoginPage() {
+    return `<div class="form-box"><h2>⚙️ Admin Login</h2>
+        <div class="form-group"><label>Admin Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter admin password"></div>
+        <button class="btn" onclick="adminLogin()">Login as Admin</button>
+        <p style="text-align:center;color:#718078;font-size:13px">Admin password is configured privately on the Flask server.</p>
+    </div>`;
+}
+
+async function adminLogin() {
+    const password = document.getElementById("adminPassword").value;
+    try {
+        await api("/api/admin/login", { method: "POST", body: JSON.stringify({ password }) });
+        isAdmin = true;
+        updateNav();
+        go("admin");
+    } catch (error) { showError(error); }
+}
+
+async function adminLogout() {
+    try { await api("/api/admin/logout", { method: "POST", body: "{}" }); }
+    catch (error) { console.error(error); }
+    isAdmin = false;
+    updateNav();
+    go("home");
+}
+
+async function adminPage() {
+    if (!isAdmin) { go("admin-login"); return ""; }
+    let bookings = [], users = [];
+    try {
+        [bookings, users] = await Promise.all([api("/api/admin/bookings"), api("/api/admin/users")]);
+    } catch (error) { isAdmin = false; go("admin-login"); return ""; }
+    const confirmed = bookings.filter(b => b.status === "Confirmed").length;
+    const cancelled = bookings.filter(b => b.status === "Cancelled").length;
+    const revenue = bookings.filter(b => b.status === "Confirmed").reduce((t, b) => t + Number(b.amount || 0), 0);
+    return `<div class="section-heading"><h2>⚙️ Admin Dashboard</h2><p>Manage your turf booking system.</p></div>
+        <div class="admin-grid">
+            <div class="admin-card"><div class="icon">📅</div><h2>${bookings.length}</h2><p>Total Bookings</p>
+                <button class="btn btn-small" onclick="go('admin-bookings')">View Bookings</button></div>
+            <div class="admin-card"><div class="icon">👥</div><h2>${users.length}</h2><p>Registered Users</p>
+                <button class="btn btn-small" onclick="go('admin-users')">View Users</button></div>
+            <div class="admin-card"><div class="icon">🏟️</div><h2>${Object.keys(TURFS).length}</h2><p>Available Turfs</p></div>
+            <div class="admin-card"><div class="icon">✅</div><h2>${confirmed}</h2><p>Confirmed Bookings</p></div>
+            <div class="admin-card"><div class="icon">❌</div><h2>${cancelled}</h2><p>Cancelled Bookings</p></div>
+            <div class="admin-card"><div class="icon">💰</div><h2>₹${revenue}</h2><p>Confirmed Booking Value</p></div>
+        </div>
+        <div style="text-align:center;margin-top:25px"><button class="btn btn-blue" onclick="go('admin-bookings')">Manage All Bookings</button></div>`;
+}
+
+async function adminBookingsPage() {
+    if (!isAdmin) { go("admin-login"); return ""; }
+    let list = [];
+    try { list = await api("/api/admin/bookings"); }
+    catch (error) { isAdmin = false; go("admin-login"); return ""; }
+    let rows = "";
+    list.forEach(b => {
+        const turf = TURFS[b.turfId];
+        if (!turf) return;
+        rows += `<tr><td>${escapeHTML(b.bookingId)}</td><td>${escapeHTML(turf.name)}</td>
+            <td>${escapeHTML(b.name)}</td><td>${escapeHTML(b.mobile)}</td><td>${formatDate(b.date)}</td>
+            <td>${escapeHTML(b.slot)}</td><td>₹${Number(b.amount)}</td><td>${escapeHTML(b.status)}</td>
+            <td>${b.status === "Confirmed" ? `<button class="btn btn-danger btn-small" onclick="adminCancelBooking('${escapeHTML(b.bookingId)}')">Cancel</button>` : "-"}</td></tr>`;
+    });
+    if (!rows) rows = `<tr><td colspan="9">No bookings yet.</td></tr>`;
+    return `<div class="section-heading"><h2>📅 All Bookings</h2><p>View and manage customer bookings.</p></div>
+        <div class="table-wrap"><table><tr><th>Booking ID</th><th>Turf</th><th>Name</th><th>Mobile</th><th>Date</th><th>Time</th><th>Amount</th><th>Status</th><th>Action</th></tr>${rows}</table></div>
+        <div style="text-align:center;margin-top:20px"><button class="btn btn-secondary" onclick="go('admin')">Back to Dashboard</button></div>`;
+}
+
+async function adminCancelBooking(id) {
+    if (!isAdmin || !confirm("Cancel this booking?")) return;
+    try {
+        await api(`/api/admin/bookings/${encodeURIComponent(id)}/cancel`, { method: "PATCH", body: "{}" });
+        alert("Booking cancelled.");
+        await render();
+    } catch (error) { showError(error); }
+}
+
+async function adminUsersPage() {
+    if (!isAdmin) { go("admin-login"); return ""; }
+    let users = [];
+    try { users = await api("/api/admin/users"); }
+    catch (error) { isAdmin = false; go("admin-login"); return ""; }
+    let rows = "";
+    users.forEach(user => {
+        rows += `<tr><td>${escapeHTML(user.id)}</td><td>${escapeHTML(user.name)}</td><td>${escapeHTML(user.mobile)}</td></tr>`;
+    });
+    if (!rows) rows = `<tr><td colspan="3">No registered users.</td></tr>`;
+    return `<div class="section-heading"><h2>👥 Registered Customers</h2><p>View customer account information.</p></div>
+        <div class="table-wrap"><table><tr><th>User ID</th><th>Name</th><th>Mobile</th></tr>${rows}</table></div>
+        <div style="text-align:center;margin-top:20px"><button class="btn btn-secondary" onclick="go('admin')">Back to Dashboard</button></div>`;
+}
+
+async function render() {
+    updateNav();
+
+    const page = getPage();
+    let html = "";
+
+    switch (page) {
+        case "home":
+            html = homePage();
+            break;
+
+        case "turfs":
+            html = turfPage();
+            break;
+
+        case "details":
+            html = detailsPage();
+            break;
+
+        case "slots":
+            html = await slotsPage();
+            break;
+
+        case "booking":
+            html = bookingPage();
+            break;
+
+        case "confirmation":
+            html = confirmationPage();
+            break;
+
+        case "register":
+            html = registerPage();
+            break;
+
+        case "login":
+            html = loginPage();
+            break;
+
+        case "my-bookings":
+            html = await myBookingsPage();
+            break;
+
+        case "admin-login":
+            html = adminLoginPage();
+            break;
+
+        case "admin":
+            html = await adminPage();
+            break;
+
+        case "admin-bookings":
+            html = await adminBookingsPage();
+            break;
+
+        case "admin-users":
+            html = await adminUsersPage();
+            break;
+
+        default:
+            html = homePage();
+    }
+
+    document.getElementById("app").innerHTML = html;
+}
+
+window.addEventListener("hashchange", () => render());
+
+async function startApp() {
+    try { currentUser = await api("/api/me"); } catch (_) { currentUser = null; }
+    try { await api("/api/admin/session"); isAdmin = true; } catch (_) { isAdmin = false; }
+    await render();
+}
+startApp();
+
+</script>
+</body>
+</html>
